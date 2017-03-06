@@ -15,6 +15,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
@@ -53,34 +54,37 @@ public class RetrofitSingleton {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             builder.addInterceptor(loggingInterceptor);
         }
+
         // 缓存 http://www.jianshu.com/p/93153b34310e
         File cacheFile = new File(BaseApplication.getAppCacheDir(), "/NetCache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-        Interceptor cacheInterceptor = chain -> {
-            Request request = chain.request();
-            if (!CommonUtil.isNetworkConnected(BaseApplication.getAppContext())) {
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-//                        .addHeader("Content-Type", "application/json")
-//                        .addHeader("Accept", "application/vnd.yuanzi.v4+json")
-//                        .addHeader("Range", "page:1,max:10")
-//                        .addHeader("Authorization", "Bearer unsign")
-                        .build();
-            }
-            Response response = chain.proceed(request);
-            Response.Builder newBuilder = response.newBuilder();
-            if (CommonUtil.isNetworkConnected(BaseApplication.getAppContext())) {
-                int maxAge = 0;
-                // 有网络时 设置缓存超时时间0个小时
-                newBuilder.header("Cache-Control", "public, max-age=" + maxAge);
-            } else {
-                // 无网络时，设置超时为4周
-                int maxStale = 60 * 60 * 24 * 28;
-                newBuilder.header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale);
-            }
-            return newBuilder.build();
-        };
-        builder.cache(cache).addInterceptor(cacheInterceptor);
+
+
+//        Interceptor cacheInterceptor = chain -> {
+//            Request request = chain.request();
+//            if (!CommonUtil.isNetworkConnected(BaseApplication.getAppContext())) {
+//                request = request.newBuilder()
+//                        .cacheControl(CacheControl.FORCE_CACHE)
+////                        .addHeader("Content-Type", "application/json")
+////                        .addHeader("Accept", "application/vnd.yuanzi.v4+json")
+////                        .addHeader("Range", "page:1,max:10")
+////                        .addHeader("Authorization", "Bearer unsign")
+//                        .build();
+//            }
+//            Response response = chain.proceed(request);
+//            Response.Builder newBuilder = response.newBuilder();
+//            if (CommonUtil.isNetworkConnected(BaseApplication.getAppContext())) {
+//                int maxAge = 0;
+//                // 有网络时 设置缓存超时时间0个小时
+////                newBuilder.header("Cache-Control", "public, max-age=" + maxAge);
+//            } else {
+//                // 无网络时，设置超时为4周
+//                int maxStale = 60 * 60 * 24 * 28;
+////                newBuilder.header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale);
+//            }
+//            return newBuilder.build();
+//        };
+//        builder.cache(cache).addInterceptor(cacheInterceptor);
         //设置超时
         builder.connectTimeout(15, TimeUnit.SECONDS);
         builder.readTimeout(20, TimeUnit.SECONDS);
@@ -94,7 +98,7 @@ public class RetrofitSingleton {
         sRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.HOST)
                 .client(sOkHttpClient)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }

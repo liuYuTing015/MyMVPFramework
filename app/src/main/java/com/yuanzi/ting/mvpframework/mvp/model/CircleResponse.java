@@ -1,12 +1,14 @@
 package com.yuanzi.ting.mvpframework.mvp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * Created by gaoyan on 17/2/10.
  */
-
 public class CircleResponse {
+
     public List<Circle> circles;
     public List<Circle> hotCircles;
     public List<Banner> banners;
