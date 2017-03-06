@@ -41,4 +41,9 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button);
     }
+
+    @Override
+    protected void onPause() {
+        
+    }
 }
