@@ -6,7 +6,12 @@ import com.yuanzi.ting.mvpframework.utils.CommonUtil;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.*;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -28,7 +33,7 @@ public class RetrofitSingleton {
         sApiService = sRetrofit.create(ApiService.class);
     }
 
-    private RetrofitSingleton() {
+    public RetrofitSingleton() {
         init();
     }
 
@@ -56,6 +61,10 @@ public class RetrofitSingleton {
             if (!CommonUtil.isNetworkConnected(BaseApplication.getAppContext())) {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
+//                        .addHeader("Content-Type", "application/json")
+//                        .addHeader("Accept", "application/vnd.yuanzi.v4+json")
+//                        .addHeader("Range", "page:1,max:10")
+//                        .addHeader("Authorization", "Bearer unsign")
                         .build();
             }
             Response response = chain.proceed(request);

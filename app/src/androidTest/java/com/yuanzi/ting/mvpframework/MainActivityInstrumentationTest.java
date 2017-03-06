@@ -5,7 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 
-import com.yuanzi.ting.mvpframework.mvp.MainActivity;
+import com.yuanzi.ting.mvpframework.mvp.ui.MainActivity;
 
 import org.junit.Before;
 import org.junit.Rule;

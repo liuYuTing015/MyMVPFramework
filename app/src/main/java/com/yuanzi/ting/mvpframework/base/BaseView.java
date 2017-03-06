@@ -5,4 +5,5 @@ package com.yuanzi.ting.mvpframework.base;
  */
 
 public interface BaseView {
+
 }
