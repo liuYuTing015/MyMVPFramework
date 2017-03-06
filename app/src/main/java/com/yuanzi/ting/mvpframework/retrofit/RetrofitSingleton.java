@@ -4,6 +4,7 @@ import com.yuanzi.ting.mvpframework.base.BaseApplication;
 import com.yuanzi.ting.mvpframework.utils.CommonUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -48,7 +49,6 @@ public class RetrofitSingleton {
     private static void initOkHttp() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
-            // https://drakeet.me/retrofit-2-0-okhttp-3-0-config
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             builder.addInterceptor(loggingInterceptor);
@@ -61,10 +61,6 @@ public class RetrofitSingleton {
             if (!CommonUtil.isNetworkConnected(BaseApplication.getAppContext())) {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
-//                        .addHeader("Content-Type", "application/json")
-//                        .addHeader("Accept", "application/vnd.yuanzi.v4+json")
-//                        .addHeader("Range", "page:1,max:10")
-//                        .addHeader("Authorization", "Bearer unsign")
                         .build();
             }
             Response response = chain.proceed(request);
