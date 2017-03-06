@@ -1,7 +1,8 @@
-package com.yuanzi.ting.mvpframework.mvp;
+package com.yuanzi.ting.mvpframework.mvp.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,10 +10,14 @@ import android.widget.TextView;
 
 import com.yuanzi.ting.corelibrary.GradleTest;
 import com.yuanzi.ting.mvpframework.R;
+import com.yuanzi.ting.mvpframework.mvp.MvpActivity;
+import com.yuanzi.ting.mvpframework.mvp.model.CircleResponse;
+import com.yuanzi.ting.mvpframework.mvp.presenter.MainPresenter;
+import com.yuanzi.ting.mvpframework.mvp.view.MainView;
 
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MvpActivity<MainPresenter> implements MainView {
     private TextView textView;
     private Button button;
     private EditText editText;
@@ -29,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = editText.getText().toString();
-                textView.setText("Hello," + name + "!");
+                mMvpPresenter.loadCircle();
             }
         });
 
@@ -44,6 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        
+
+    }
+
+    @Override
+    protected MainPresenter createPresenter() {
+        return new MainPresenter(this);
+    }
+
+    @Override
+    public void getDataSuccess(CircleResponse response) {
+        Log.i("TAGGG", response.getCircles().get(0).getName());
+    }
+
+    @Override
+    public void getDataFail(String msg) {
+        Log.i("TAGGG", msg);
     }
 }
