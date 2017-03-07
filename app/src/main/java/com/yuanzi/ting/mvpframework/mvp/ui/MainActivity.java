@@ -2,12 +2,15 @@ package com.yuanzi.ting.mvpframework.mvp.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yuanzi.ting.corelibrary.GradleTest;
 import com.yuanzi.ting.mvpframework.R;
 import com.yuanzi.ting.mvpframework.mvp.MvpActivity;
@@ -21,6 +24,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
     private TextView textView;
     private Button button;
     private EditText editText;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
             @Override
             public void onClick(View v) {
                 mMvpPresenter.loadCircle();
+
             }
         });
 
@@ -44,6 +49,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         textView = (TextView) findViewById(R.id.textView);
         editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button);
+        image = (ImageView) findViewById(R.id.image);
     }
 
     @Override
@@ -59,6 +65,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
     @Override
     public void getDataSuccess(CircleResponse response) {
         Log.i("TAGGG", response.getCircles().get(0).getName());
+        Glide.with(this).load(response.getCircles().get(0).getCover()).into(image);
     }
 
     @Override

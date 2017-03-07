@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MVPFramework.iml" filepath="$PROJECT_DIR$/MVPFramework.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyMVPFramework.iml" filepath="$PROJECT_DIR$/MyMVPFramework.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/corelibrary/corelibrary.iml" filepath="$PROJECT_DIR$/corelibrary/corelibrary.iml" />
