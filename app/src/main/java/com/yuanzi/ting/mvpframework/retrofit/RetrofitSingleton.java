@@ -2,6 +2,7 @@ package com.yuanzi.ting.mvpframework.retrofit;
 
 import com.yuanzi.ting.mvpframework.base.BaseApplication;
 import com.yuanzi.ting.mvpframework.utils.CommonUtil;
+import com.yuanzi.ting.mvpframework.utils.HttpLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,8 +51,8 @@ public class RetrofitSingleton {
     private static void initOkHttp() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            HttpLogger loggingInterceptor = new HttpLogger();
+//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             builder.addInterceptor(loggingInterceptor);
         }
         // 缓存 http://www.jianshu.com/p/93153b34310e

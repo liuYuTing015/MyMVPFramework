@@ -1,11 +1,5 @@
 package com.yuanzi.ting.mvpframework.utils;
 
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +9,6 @@ import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.Protocol;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.internal.platform.Platform;
@@ -72,6 +65,9 @@ public class HttpLogger implements Interceptor {
             logger.log(name + ": " + headers.value(i));
         }
         logger.log("================== 头结束 ==================");
+
+
+
         long startNs = System.nanoTime();
         Response response;
         try {
