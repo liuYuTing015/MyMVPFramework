@@ -14,10 +14,10 @@ public interface ApiService {
 
     String HOST = "https://test.iyuanzi.com/";
 
-    @Headers({"Accept:application/vnd.yuanzi.v4+json"
-            , "Content-Type: application/json",
-            "Authorization: Bearer unsign"
-    })
+//    @Headers({"Accept:application/vnd.yuanzi.v4+json"
+//            , "Content-Type: application/json",
+//            "Authorization: Bearer unsign"
+//    })
     @GET("circles")
     Observable<CircleResponse> getCircle();
 }
