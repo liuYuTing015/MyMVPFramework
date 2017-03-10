@@ -5,6 +5,7 @@ import android.util.Log;
 import com.yuanzi.ting.mvpframework.BuildConfig;
 import com.yuanzi.ting.mvpframework.base.BaseApplication;
 import com.yuanzi.ting.mvpframework.utils.CommonUtil;
+import com.yuanzi.ting.mvpframework.utils.HttpLogger;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -53,8 +54,8 @@ public class RetrofitSingleton {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         // 缓存 http://www.jianshu.com/p/93153b34310e
         if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            HttpLogger loggingInterceptor = new HttpLogger();
+//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             builder.addInterceptor(loggingInterceptor);
         }
 

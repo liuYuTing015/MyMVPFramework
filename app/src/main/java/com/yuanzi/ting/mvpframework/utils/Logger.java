@@ -278,4 +278,17 @@ public class Logger {
     }
 
 
+    String[] strs={"qewq","qweqwe","qweqwe","qweqwe"};
+
+    public void onbbb(){
+        for (String str : strs){
+
+        }
+
+        for (int i=0;i<strs.length;i++){
+            String str = strs[i];
+        }
+    }
+
+
 }
