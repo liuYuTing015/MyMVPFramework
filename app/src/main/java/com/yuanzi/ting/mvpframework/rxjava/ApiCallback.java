@@ -1,6 +1,8 @@
 package com.yuanzi.ting.mvpframework.rxjava;
 
 import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import rx.Subscriber;
 
 /**
@@ -43,6 +45,8 @@ public abstract class ApiCallback<M> extends Subscriber<M> {
         onSuccess(model);
 
     }
+
+
 
     @Override
     public void onCompleted() {

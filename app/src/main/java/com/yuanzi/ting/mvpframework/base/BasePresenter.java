@@ -1,6 +1,7 @@
 package com.yuanzi.ting.mvpframework.base;
 
 import com.yuanzi.ting.mvpframework.retrofit.ApiService;
+import com.yuanzi.ting.mvpframework.retrofit.Headers;
 import com.yuanzi.ting.mvpframework.retrofit.RetrofitSingleton;
 
 import rx.Observable;
@@ -21,6 +22,11 @@ public class BasePresenter<V> {
     public void attachView(V mvpView) {
         this.mMvpView = mvpView;
         mApiService = RetrofitSingleton.getInstance().getApiService();
+    }
+
+    public void attachView(V mvpView, Headers headers) {
+        this.mMvpView = mvpView;
+        mApiService = RetrofitSingleton.getInstance(headers).getApiService();
     }
 
     public void detachView() {

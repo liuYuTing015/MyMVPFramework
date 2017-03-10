@@ -31,7 +31,7 @@ public class RetrofitSingleton {
     private static ApiService sApiService = null;
     private static Retrofit sRetrofit = null;
     private static OkHttpClient sOkHttpClient = null;
-
+    private static Headers sHeaders;
     private void init() {
         initOkHttp();
         initRetrofit();
@@ -46,6 +46,11 @@ public class RetrofitSingleton {
         return SingletonHolder.INSTANCE;
     }
 
+    public static RetrofitSingleton getInstance(Headers headers) {
+        sHeaders = headers;
+        return SingletonHolder.INSTANCE;
+    }
+
     private static class SingletonHolder {
         private static final RetrofitSingleton INSTANCE = new RetrofitSingleton();
     }
@@ -54,7 +59,7 @@ public class RetrofitSingleton {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         // 缓存 http://www.jianshu.com/p/93153b34310e
         if (BuildConfig.DEBUG) {
-            HttpLogger loggingInterceptor = new HttpLogger();
+            HttpLogger loggingInterceptor = new HttpLogger(sHeaders);
 //            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             builder.addInterceptor(loggingInterceptor);
         }

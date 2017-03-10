@@ -22,6 +22,7 @@ import static okhttp3.internal.platform.Platform.INFO;
 public class HttpLogger implements Interceptor {
     private static final String TAG = "HttpLogger";
     private static final Charset UTF8 = Charset.forName("UTF-8");
+    com.yuanzi.ting.mvpframework.retrofit.Headers sHeaders;
 
     public interface Logger {
         void log(String message);
@@ -38,8 +39,9 @@ public class HttpLogger implements Interceptor {
     }
     private final Logger logger;
 
-    public HttpLogger() {
+    public HttpLogger(com.yuanzi.ting.mvpframework.retrofit.Headers headers) {
         this(Logger.DEFAULT);
+        sHeaders=headers;
     }
 
     public HttpLogger(Logger logger) {
@@ -83,6 +85,10 @@ public class HttpLogger implements Interceptor {
         String body = responseBody.string();
         logger.log(body);
         //json 格式化
+        if (sHeaders!=null) {
+            Headers h = response.headers();
+            sHeaders.getHeaders(h);
+        }
         com.yuanzi.ting.mvpframework.utils.Logger.j(body);
 
         return chain.proceed(request);
