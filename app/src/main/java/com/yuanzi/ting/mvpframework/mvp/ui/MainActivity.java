@@ -1,21 +1,26 @@
 package com.yuanzi.ting.mvpframework.mvp.ui;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yuanzi.ting.corelibrary.GradleTest;
 import com.yuanzi.ting.mvpframework.R;
-import com.yuanzi.ting.mvpframework. mvp.MvpActivity;
+import com.yuanzi.ting.mvpframework.mvp.MvpActivity;
 import com.yuanzi.ting.mvpframework.mvp.model.Circle;
 import com.yuanzi.ting.mvpframework.mvp.model.CircleResponse;
 import com.yuanzi.ting.mvpframework.mvp.model.MessageEvent;
@@ -41,6 +46,13 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
     private ImageView image;
     private ImageView image1;
     Circle circle;
+
+    private TextView tv_signature;
+    private PackageManager manager;
+    private PackageInfo packageInfo;
+    private Signature[] signatures;
+    private StringBuilder builder;
+    private String signature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +127,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         Log.i("TAGGG", response.getCircles().get(0).getName());
         Glide.with(this)
                 .load(response.getCircles().get(0).getCover())
-                .placeholder(R.drawable.leak_canary_icon)
                 .crossFade()
                 .into(image);
         image.setTag(response.getCircles().get(6));
@@ -139,5 +150,29 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
         // GlideImageLoader.glideLoader(MainActivity.this, circle.getCover(), R.drawable.leak_canary_icon, R.drawable.leak_canary_icon, image1, 1);
 
 
+    }
+
+    public void getSignature(View view) {
+        String pkgname = "com.yuanzi.ting.mvpframework";
+        boolean isEmpty = TextUtils.isEmpty(pkgname);
+        if (isEmpty) {
+            Toast.makeText(this, "应用程序的包名不能为空！", Toast.LENGTH_SHORT);
+        } else {
+            try {
+                /** 通过包管理器获得指定包名包含签名的包信息 **/
+                packageInfo = manager.getPackageInfo(pkgname, PackageManager.GET_SIGNATURES);
+                /******* 通过返回的包信息获得签名数组 *******/
+                signatures = packageInfo.signatures;
+                /******* 循环遍历签名数组拼接应用签名 *******/
+                for (Signature signature : signatures) {
+                    builder.append(signature.toCharsString());
+                }
+                /************** 得到应用签名 **************/
+                signature = builder.toString();
+                textView.setText(signature);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
