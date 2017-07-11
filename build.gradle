@@ -17,6 +17,7 @@ allprojects {
         jcenter()
 
         maven {        url "https://raw.githubusercontent.com/liuYuTing015/CoreCommonRepo/master"    }
+        maven {        url "https://raw.githubusercontent.com/liuYuTing015/LocationService/master"    }
     }
 }
 
